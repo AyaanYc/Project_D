@@ -50,14 +50,15 @@
         $param = [
             "profile_img" => $target_filenm,
             "user_no" => $login_user["user_no"],
-            "user_nm" => $nm
+            "user_nm" => $nm,
+            "ctnt" => $myself,
         ];
 
         $result = upd_profile($param);
         $login_user["profile_img"] = $target_filenm;
         $login_user["nm"] = $nm;
         // $_SESSION["login_user"] = $login_user;
-        Header("Location: profile.php");
+        Header("Location: profile.php?user_no={$login_user['user_no']}");
     } else { //이름만 수정시
         echo "사진을 선택해주세요";
         // $param = [

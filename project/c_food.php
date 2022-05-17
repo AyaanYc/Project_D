@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
+<div class="container">
     <?php include('recipe.php') ?>          
         <div class="main">
       
@@ -33,5 +34,9 @@
             ?>
 
         </div>
+    </div>
+        <?php
+        include_once "footer.php";
+        ?>
 </body>
 </html>

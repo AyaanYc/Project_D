@@ -33,64 +33,89 @@ $detail_user_no = sel_detail_profile($param);
     <title><?= $item['food_title'] ?></title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 
 <body>
     <?php include_once "header.php"; ?> 
     <main>
-        <a href="all_food.php"><button>목록</button></a>
-        <?php
-        if (isset($_SESSION['login_user']) && $login_user['user_no'] === $item['user_no']) { ?>
-            <a href="mod.php?food_no=<?= $food_no ?>"><button>수정</button></a>
-            <button onclick="isDel();">삭제</button>
-        <?php } ?>
-
-        </div>
-        <div class="main1">
-            <div class="box1">
-                <img src="/project/img/profile/<?= $detail_user_no['user_no']?>/<?=$item['profile_img']?>">
+        <div class="container">
+            <div class="main1">
+                <div class="container1">
+                    <div class="box1">
+                        <img class = "profile_img" src="/project/img/profile/<?= $detail_user_no['user_no']?>/<?=$item['profile_img']?>">
+                    </div>
+                    <div class="box2">
+                        <?= $item['nm'] ?>
+                    </div>
+                </div>
+                <div class="container2">
+                     <div class="box3">
+                        <?= $item["food_title"] ?>
+                    </div>
+                    <div class="box4">
+                        <img class='food_img' src="/project/img/board/<?= $item['food_img'] ?>">
+                    </div>
+                </div>
             </div>
-            <div class="box2">
-                <?= $item['nm'] ?>
+            <div class="main2">
+                <div class="box5">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $url ?>" allowfullscreen></iframe>
+                </div>
+                <div class="box6">
+                    <?= $item["food_ctnt"] ?>
+                </div>
+                <div class="box7">
+                    <?= $item['created_at'] ?>   
+                </div>
             </div>
-            <div class="box3">
-                <?= $item['created_at'] ?></div>
-        </div>
-        <div class="box4">
-            <img class='food_img' src="/project/img/board/<?= $item['food_img'] ?>">
-        </div>
-        <div class="box5">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $url ?>" allowfullscreen></iframe>
-        </div>
-        <div class="box6">
-            <?= $item["food_ctnt"] ?>
-        </div>
-        <div class="com1">댓글</div>
+            <div class="user_button">
+                <?php
+                if (isset($_SESSION['login_user']) && $login_user['user_no'] === $item['user_no']) { ?>
+                    <a href="mod.php?food_no=<?= $food_no ?>"><button>수정</button></a>
+                    <button onclick="isDel();">삭제</button>
+                <?php } ?>
+            </div>
+            <hr>
+            <div class="main3">
+            <div class="com1"><h1>댓글</h1>
                 <?php
                     foreach($com as $row) {?>
-                        <div class="comm">
-                            <div><?=$row["reply_ctnt"]?></div>
-                            <div id="comment">
-                                <div><?=$row["nm"]?></div>
-                                <div><?=$row["created_at"]?></div>
-                            </div>
-                        </div>
-                    <?php }  ?>  
-                </div>
+                            <div class="comm">
+                                <div class="co1">
+                                    <div><a href="profile.php"><img src="/project/img/profile/<?=$row["user_no"]?>/<?=$row['profile_img']?>"></a></div>
+                                    <div class="nm"><?=$row["nm"]?></div>
+                                    <div><?=$row["created_at"]?></div>
+                                    <?php if(isset($_SESSION["login_user"]) && $login_user["user_no"] === $item["user_no"]) { ?>
+                                        <div class="btn2 mod"><a href="#">수정</a></div>
+                                        <div class="btn2 del" onclick="isDel();"><a href="del_com.php?reply_no=<?=$row["reply_no"]?>">삭제</a></div>
+                                    <?php } ?>
+                                </div>
+                                <input type="hidden" name="reply_no" value="<?=$row["reply_no"]?>">
+                                <div class="co2"><?=$row["reply_ctnt"]?></div>
+                            </div>  
+                <?php } ?>  
                 
-                    <form action="com_proc.php" method="post">
+        </div>       
+                    <form action="com_proc.php" method="post" id="com_f">
                         <div class="c cn">
-                            <div class="nm"><div class="i_nm"><?=$nm?></div>
+                            <div class="profile_nm"><img src="/project/img/profile/<?=$login_user["user_no"]?>/<?=$login_user['profile_img']?>"><br><?=$nm?></div>
                             <div><input type="hidden" name="food_no" value=<?=$food_no?>></div>
-                            <div><textarea id="ctnt" name="reply_ctnt" placeholder="내용"></textarea></div></div>
+                            <div><textarea id="ctnt" name="reply_ctnt" placeholder=""></textarea></div>
                             <div><input id="sub" type="submit" value="댓글등록"></div>
                         </div>
                     </form>
+        
+            </div>
+        </div>
+        <?php
+        include_once "footer.php";
+        ?>
         <script>
             function isDel() {
                 console.log('isDel 실행 됨!!');
                 if (confirm('삭제하시겠습니까?')) {
-                    location.href = "del.php?i_board=<?= $food_no ?>";
+                    location.href = "del.php?food_no=<?= $food_no ?>";
                 }
             }
         </script>

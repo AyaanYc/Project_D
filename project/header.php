@@ -30,7 +30,7 @@
             </div>
             <div class="join">
             <?php if(isset($_SESSION["login_user"])) { ?>
-                <a href="profile.php">
+                <a href="profile.php?user_no=<?=$login_user["user_no"]?>">
                     <?php
                             $session_img = $_SESSION["login_user"]["profile_img"];
                             $profile_img = $session_img == null ? "ico_user.png" : "profile/".$_SESSION["login_user"]["user_no"] . "/" .$session_img; 

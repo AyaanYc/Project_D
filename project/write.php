@@ -24,17 +24,17 @@
 
                 <div>
                     <div>
-                        <label for="title">레시피 제목</label>
-                        <input type="text" name="title" id="title">
+                        <label for="title"><p> 레시피 제목</p></label>
+                        <input class="input" type="text" name="title" id="title">
                     </div>
 
                     <div>
-                        <label for="video">동영상 URL</label>
-                        <input type="url" name="video" id="video">
+                        <label for="video"><p>동영상 URL</p></label>
+                        <input class="input" type="url" name="video" id="video">
                     </div>
 
                     <div>
-                        <label for="category">카테고리</label>
+                        <label for="category"><p>카테고리</p></label>
                         <select name="category" id="category">
                             <option value="0">음식종류</option>
                             <option value="1">한식</option>
@@ -44,14 +44,14 @@
                         </select>
                     </div>
 
-                    <div>
-                        <label for="ctnt">내용 </label>
-                        <textarea name="ctnt" cols="30" rows="20"></textarea>
+                    <div class="ctnt">
+                        <label for="ctnt"><p>내용 </p></label>
+                        <textarea wrap="hard" name="ctnt" cols="48" rows="20" id="ctnt"> </textarea>
                     </div>
 
                     <div>
-                        <input type="submit" value="등록">
-                        <input type="submit" value="취소" formaction="main.php">
+                        <input class="submit" type="submit" value="등록">
+                        <input class="submit" type="submit" value="취소" formaction="main.php">
                     </div>
                 </div>
             </form>     

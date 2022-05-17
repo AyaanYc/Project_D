@@ -169,7 +169,7 @@
 
     function comment(&$param){
         $food_no = $param["food_no"];
-        $sql="SELECT A.*,B.nm
+        $sql="SELECT A.*,B.nm,B.profile_img
         FROM r_board A
         INNER JOIN t_user B ON A.user_no = B.user_no
         WHERE A.food_no = $food_no";
@@ -193,6 +193,25 @@
 
         return $result;
     }
+    //detail 댓글 
+    function del_comment(&$param){
+        $reply_no = $param["reply_no"];
+
+        $ssql = "SELECT food_no 
+                 FROM r_board 
+                 WHERE reply_no = {$reply_no}";
+
+        $sql = "DELETE FROM r_board 
+                WHERE reply_no = {$reply_no}";
+
+        $conn = get_conn();
+        $food_no = mysqli_query($conn, $ssql);
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);
+        if($result){
+            return mysqli_fetch_assoc($food_no);
+        }
+    }
 
     function sel_detail_profile(&$param) {
         $food_no = $param["food_no"];
@@ -206,4 +225,21 @@
         $result = mysqli_query($conn, $sql);
         mysqli_close($conn);
         return mysqli_fetch_assoc($result);
+    }
+
+    function sel_profile_food(&$param)
+    {
+        $user_no = $param["user_no"];
+        $sql = "SELECT A.food_no, A.food_img, A.food_title, A.created_at,B.profile_img,B.ctnt,
+                       B.nm, A.user_no 
+                FROM f_board A
+                INNER JOIN t_user B 
+                ON A.user_no = B.user_no
+                WHERE A.user_no = $user_no
+                ORDER BY created_at desc";
+            
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);
+        return $result;
     }

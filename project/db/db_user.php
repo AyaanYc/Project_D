@@ -35,7 +35,8 @@ function sel_user(&$param)
 function upd_profile(&$param) {
     $sql = "UPDATE t_user 
                SET profile_img = '{$param["profile_img"]}',
-                   nm = '{$param["user_nm"]}' 
+                   nm = '{$param["user_nm"]}',
+                   ctnt = '{$param["ctnt"]}'
              WHERE user_no = {$param["user_no"]}";
     $conn = get_conn();
     $result = mysqli_query($conn, $sql);
@@ -46,7 +47,7 @@ function upd_profile(&$param) {
  function sel_profile(&$param) {
     $user_no = $param['user_no'];
     $sql = 
-    "  SELECT profile_img
+    "  SELECT profile_img, ctnt, user_no
        FROM   t_user
        WHERE  user_no = $user_no  
     ";

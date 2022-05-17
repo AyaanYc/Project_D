@@ -7,14 +7,17 @@
         $login_user = &$_SESSION["login_user"];
         $nm = &$login_user["nm"];
     }
-    include_once 'db/db_board.php';
+    include 'db/db_board.php';
+    include_once "db/db_user.php";
     $user_no = $_GET["user_no"];
+    $food_no = $_GET["food_no"];
     $param = [
-        "user_no" => $user_no
+        "user_no" => $user_no,
+        "food_no" => $food_no
     ];
-    $list = sel_profile_food($param);
-    $result = mysqli_fetch_assoc($list);
+    $result = sel_profile($param);
     $ctnt = $result["ctnt"];
+    $list = sel_detail_profile($param);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,36 +33,27 @@
 <div class="container">
     <main>
         <div class="header">
-            <form action="profile_proc.php" enctype="multipart/form-data" method="post">
-               
+
                 <div class="box1">
-                        <?php
-                            $session_img = $_SESSION["login_user"]["profile_img"];
-                            $profile_img = $session_img == null ? "ico_user.png" : "profile/".$_SESSION["login_user"]["user_no"] . "/" .$session_img; 
-                        ?>
-                    <label>
-                        <img id="preview" src="/project/img/<?=$profile_img?>" style="cursor:pointer">
-                        <input class="hidden" onchange="readURL(this);" type="file" name="img" accept="image/*">
-                    </label>
+                    <img src="/project/img/profile/<?=$result["user_no"]?>/<?=$result["profile_img"]?>">
                 </div>
-                <div class="box2"><input type="text" value="<?=$nm?>" name="user_nm"></div>
-                <div class="box3"><input name="myself" placeholder="자기소개를 입력해주세요." value="<?=$ctnt?>"></div>
-                <div class="box4">
-                    <input type="submit" value="수정하기">
-                </div>
-            </form>
-            <hr>
+                <div class="box2"><?=$nm?></div>
+                <?php if(empty($ctnt)) { ?>
+                    <div class="box3"><input name="myself" placeholder="자기소개 내용이 없습니다." readonly></div>
+            <?php } else { ?>
+                <div class="box3"><input name="myself" placeholder="<?=$ctnt?>" readonly></div>
+                <?php } ?>
         </div>
         <div class="main">
       
            <?php
-                foreach($list as $item){
+                foreach($list as $writer){
             ?>
             <ul>
-               <li><a href="detail.php?food_no=<?=$item['food_no']?>"><img src="/project/img/board/<?=$item['food_img']?>"></li>
+               <li><a href="detail.php?food_no=<?=$item['food_no']?>"><img src="/project/img/board/<?=$writer['food_img']?>"></li>
                <div class="title">
-                    <li class="profile"><img src="/project/img/profile/<?=$item["user_no"]?>/<?=$item['profile_img']?>"></li>
-                    <li><?=$item['food_title']?><br><?=$item['nm']?></a></li>
+                    <li class="profile"><img src="/project/img/profile/<?=$writer["user_no"]?>/<?=$writer['profile_img']?>"></li>
+                    <li><?=$writer['food_title']?><br><?=$writer['nm']?></a></li>
                </div>   
            </ul>
             <?php    
