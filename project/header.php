@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="logo">
-                <h1><a href="#">LOGO</a></h1>
+                <h1><a href="main.php">LOGO</a></h1>
             </div>
             <div class="join">
             <?php if(isset($_SESSION["login_user"])) { ?>
@@ -41,7 +41,7 @@
                         </a>
                         <?=$nm?>
                         <a href='logout.php'><button>로그아웃</button></a>
-                <?php } else { ?>
+                <?php } else if(isset($_SESSION["master_user"])) { ?>
                 <span><a href="login.php">로그인</a></span>
                 <span><a href="join.php">회원가입</a></span>
                 <?php } ?>

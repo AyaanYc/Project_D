@@ -36,21 +36,6 @@
         ); 
     }
 
-    function qna()
-    {
-        $sql=
-        "SELECT A.qust_no, A.qust_title, A.user_no, A.created_at, A.qust_ctnt, B.nm
-        FROM q_board A
-        INNER JOIN t_user B
-        WHERE A.user_no = B.user_no
-        ORDER BY qust_no DESC
-        ";
-        $conn=get_conn();
-        $result=mysqli_query($conn,$sql);
-        mysqli_close($conn);
-        return $result;
-    }
-
     function qna_list()
     {
         $sql=
@@ -83,13 +68,94 @@
         mysqli_close($conn);
         return $result;
     }
+    function qna_detail(&$param) {
+        $qust_no = $param["qust_no"];
 
-    function sel_board(&$param)
+        $sql = 
+        "SELECT * FROM t_user A
+        INNER JOIN q_board B
+        ON A.user_no = B.user_no
+        WHERE B.qust_no = '$qust_no'";
+
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);        
+        return mysqli_fetch_assoc($result);
+    }
+
+    //다음글 (최신글)
+    function sel_next_board(&$param) {
+        $qust_no = $param["qust_no"];
+        $sql = "SELECT qust_no
+                  FROM q_board
+                 WHERE qust_no > $qust_no
+                 ORDER BY qust_no
+                 LIMIT 1";
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);        
+        $row = mysqli_fetch_assoc($result);
+        if($row) {
+            return $row["qust_no"];
+        }
+        return 0;
+    }
+
+    //이전글 (지난글)
+    function sel_prev_board(&$param) {
+        $qust_no = $param["qust_no"];
+        $sql = "SELECT qust_no
+                  FROM q_board
+                 WHERE qust_no < $qust_no
+                 ORDER BY qust_no DESC
+                 LIMIT 1";
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);        
+        $row = mysqli_fetch_assoc($result);
+        if($row) {
+            return $row["qust_no"];
+        }
+        return 0;
+    }
+
+    function qna_upd_board(&$param) {
+        $qust_no = $param["qust_no"];
+        $qust_title = $param["qust_title"];
+        $qust_ctnt = $param["qust_ctnt"];
+        $user_no = $param["user_no"];
+
+        $sql = "UPDATE q_board
+                   SET qust_title = '$qust_title'
+                     , qust_ctnt = '$qust_ctnt'
+                 WHERE qust_no = $qust_no
+                   AND user_no = $user_no";
+         $conn = get_conn();
+         $result = mysqli_query($conn, $sql);
+         mysqli_close($conn);
+         return $result;
+    }
+
+    function qna_del_board(&$param){
+        $user_no =$param["user_no"];
+        $qust_no =$param["qust_no"];
+
+        $sql=
+        "DELETE FROM q_board
+        WHERE qust_no =$qust_no
+        AND user_no =$user_no";
+        $conn=get_conn();
+        $result=mysqli_query($conn,$sql);
+        mysqli_close($conn);
+        return $result;
+    }
+///////////////////////////////////
+    function sel_recipe(&$param)
 {
     $food_no = $param["food_no"];
 
     $conn = get_conn();
-    $sql = "SELECT B.profile_img, B.nm, A.created_at, A.food_img, A.food_url, A.food_title, A.food_ctnt, A.user_no
+    $sql = "SELECT B.profile_img, B.nm, A.created_at, A.food_img, A.food_url, A.food_title, A.food_ctnt, A.user_no, A.ctgr_no
             FROM f_board A
             INNER JOIN t_user B
             ON A.user_no = B.user_no
@@ -212,7 +278,7 @@
             return mysqli_fetch_assoc($food_no);
         }
     }
-
+    // detail 이미지 
     function sel_detail_profile(&$param) {
         $food_no = $param["food_no"];
         
@@ -226,7 +292,7 @@
         mysqli_close($conn);
         return mysqli_fetch_assoc($result);
     }
-
+    // 프로필
     function sel_profile_food(&$param)
     {
         $user_no = $param["user_no"];
@@ -243,3 +309,69 @@
         mysqli_close($conn);
         return $result;
     }
+
+    // userpage
+    function sel_user_page(&$param) {
+        $user_no = $param["user_no"];
+        $sql = 
+        "   SELECT A.food_img, A.food_title, A.created_at, B.profile_img,
+                   B.nm, B.ctnt, B.user_no
+            FROM   f_board A
+            INNER JOIN t_user B
+            ON A.user_no = B.user_no
+            WHERE A.user_no = $user_no
+        ";
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);
+        return $result;
+    }
+    // 디테일수정
+    function upd_recipe(&$param)
+{
+    $food_no = $param["food_no"];
+    $title = $param["title"];
+    $video = $param["video"];
+    $ctnt = $param["ctnt"];
+    $category = $param["category"];
+    $user_no = $param["user_no"];
+    $food_img = $param["food_img"];
+
+    $conn = get_conn();
+    $sql = "UPDATE f_board
+            SET food_title = '$title', food_url = '$video', food_ctnt = '$ctnt', ctgr_no = '$category', food_img = '$food_img'
+            WHERE food_no = $food_no
+            AND user_no = $user_no";
+
+    $result = mysqli_query($conn, $sql);
+    mysqli_close($conn);
+    return $result;
+}
+// 디테일삭제
+function del_recipe(&$param)
+{
+    $food_no = $param["food_no"];
+    $user_no = $param["user_no"];
+
+    $sql = "DELETE FROM f_board 
+            WHERE food_no = $food_no
+            AND user_no = $user_no";
+    $conn = get_conn();
+    $result = mysqli_query($conn, $sql);
+    mysqli_close($conn);
+    return $result;
+}
+//메인페이지 레시피 
+function main_recipe(&$param){
+        
+    $sql = "SELECT A.food_no, A.food_img, A.food_title, A.created_at,B.profile_img, B.nm, A.user_no
+            FROM f_board A
+            INNER JOIN t_user B ON A.user_no = B.user_no
+            ORDER BY created_at desc
+            LIMIT 6";
+    
+    $conn = get_conn();
+    $result = mysqli_query($conn, $sql);
+    mysqli_close($conn);
+    return $result;
+}

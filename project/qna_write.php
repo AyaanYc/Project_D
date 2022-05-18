@@ -1,3 +1,19 @@
+<?php
+    include_once "db/db_master.php";
+    include_once "db/db_board.php";
+    session_start();
+
+    if(isset($_SESSION["master_user"])){
+        $login_master = $_SESSION["master_user"];
+        $m_no = $login_master["m_no"];
+    
+    $qust_no = $_GET["qust_no"];
+    $param = [
+        "qust_no" => $qust_no
+    ];
+    $item = qna_detail($param);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +21,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>질문</title>
-    <link rel="stylesheet" href="/project/css/qna_write.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
+<?php
+include_once "header.php";
+?>
+<?php if(isset($_SESSION["master_user"])){?>
+    <h1> 답변하기</h1>
+    <div>질문 제목: <?=$item["qust_title"]?></div>
+    <div>질문 내용: <?=$item["qust_ctnt"]?></div>
+<?php } ?>
+
+<?php if(isset($_SESSION["login_user"])){ ?>
     <div class="continer">
     <h1>하고 싶은 질문을 하세요~</h1>
     <a href="qna.php"><button>이전으로</button></a>
@@ -21,5 +47,6 @@
     </div>
     </form>
     </div>
+    <?php }?>
 </body>
 </html>

@@ -9,7 +9,7 @@ $param = [
     "food_no" => $food_no
 ];
 
-$item = sel_board($param);
+$item = sel_recipe($param);
 
 $youtube_url = $item["food_url"];
     $last_index = mb_strrpos($youtube_url, "/");

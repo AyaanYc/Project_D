@@ -19,22 +19,19 @@ include_once "header.php";
     <div class="container">
         <div class="login_board">
             <h2><a href="#">LOGO</a></h2>
-            <form action="login_proc.php" method="post">
+            <form action="master_proc.php" method="post">
                 <div>
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" name="uid" placeholder="아이디">
+                    <input type="text" name="mid" placeholder="아이디">
                 </div>
                 <div>
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" name="upw" placeholder="비밀번호">
+                    <input type="password" name="mpw" placeholder="비밀번호">
                 </div>
                 <div><input type="submit" value="로그인"></div>
             </form>
-            <a href="join.php"><button>회원가입</button></a>
-        <a href="master.php"><button>관리자로그인</button></a>
-
+            관리자
         </div>
-
     </div>
 </body>
 
