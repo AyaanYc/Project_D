@@ -1,0 +1,140 @@
+.food_img{
+    height: 400px;
+}
+.profile_img {
+    border-radius: 50%;
+    width: 130px;
+}
+.main1{
+    display: flex;
+    flex-direction: column;
+}
+.container{
+    width: 80vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 63px;
+}
+.container1{
+    padding: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+.container2{
+    padding: 50px;
+    text-align: center;
+}
+.food_ctnt{
+    padding-bottom: 50px;
+}
+.main2{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 700px;
+}
+.user_button{
+    text-align: center;
+}
+.box3{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 35px;
+}
+.box5{padding-bottom: 20px;}
+.box6{
+    padding-bottom: 20px;
+    width: 700px;
+    height: 300px;
+    border: 1px solid black;
+}
+.box7{
+    padding-bottom: 20px;
+    align-self: flex-end;
+}
+.com1{
+    margin-bottom: 20px;
+}
+.com1 h1{
+    margin-top:50px;
+    padding-bottom:50px;
+    border-bottom:1px solid rgb(226, 226, 226);
+}
+.com1 img{
+    width:60px;
+    border-radius: 50%;
+}
+.comm{
+    height:100px;
+    border-bottom:1px solid rgb(226, 226, 226);
+    margin-top:20px;
+}
+.co1{
+    display:flex;
+    height:20px;
+}
+.co2{
+   padding-left: 10%;
+   padding-top: 10px;
+}
+.nm{
+    padding-left:10px;
+    padding-right:20px;
+}
+.ccccn{
+    display:flex;
+    flex-direction: column;
+}
+.cn{
+    display:flex; 
+}
+.profile_nm{
+    text-align: center;
+}
+.cn img{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+}
+#ctnt{
+    width:500px;
+    height:80px;
+    margin-left:20px;
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
+    border: none;
+}
+#sub{
+    display:flex;
+    margin-left: 20px;
+    margin-top: 20px;
+    background-color:rgb(41, 130, 182);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+#com_f{
+    margin-bottom: 20px;
+}
+.mod::after{
+    content: "|";
+    float: right;
+    display:block;
+    padding-left: 15px;
+    color: rgb(41, 130, 182);
+}
+.mod{
+    padding-left: 20px;
+}
+.del{
+    padding-left:15px;
+}
+.btn2 a{
+    color: rgb(41, 130, 182);
+}
+
