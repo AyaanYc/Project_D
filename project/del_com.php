@@ -8,7 +8,7 @@
     
     $i_user = $login_user['i_user'];
     $param =[
-        "reply_no" => $reply_no
+        "reply_no" => $reply_no 
     ];
 
     $result = del_comment($param);
