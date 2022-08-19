@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="container">
-        <?php include('recipe.php') ?>          
+        <?php include('recipe.php') ?>           
         <div class="main">
             <?php
                 foreach($list as $item){
